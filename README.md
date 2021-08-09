@@ -45,6 +45,8 @@ Known incompatible gems are:
 
   - [`newrelic_rpm`](https://github.com/newrelic/newrelic-ruby-agent/blob/4baffe79b87e6ec725dfae9f5e76113a1f1d01ba/lib/new_relic/agent/vm/monotonic_gc_profiler.rb#L22-L38)
 
+If you suspect that one of your gem might be using `GC::Profiler.clear`, you can check with `grep -R 'GC::Profiler.clear' $(bundle show --paths)`.
+
 ## Memory Leak
 
 It is important to note that the underlying `GC::Profiler` keeps internal records of all GC triggers. Every time `GCTime.total_time` is called the datastructure is reset,
