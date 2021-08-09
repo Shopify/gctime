@@ -29,10 +29,12 @@ require 'gctime'
 >> 4.times { GC.start }
 => 4
 >> GCTime.total_time
-=> 0.12742100000000012
+=> 127.42100000000012 # ms
 >> GCTime.disable
 => nil
 ```
+
+`GCTime.total_time` returns a `Float` representing the total number of milliseconds spent in GC.
 
 ## Incompatibilities
 

@@ -17,4 +17,8 @@ class GCTimeTest < Minitest::Test
     4.times { GC.start }
     refute_equal initial_time, GCTime.total_time
   end
+
+  def test_total_time_is_a_float
+    assert_instance_of Float, GCTime.total_time
+  end
 end
