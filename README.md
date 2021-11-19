@@ -26,9 +26,9 @@ Or install it yourself as:
 >> 4.times { GC.start }
 => 4
 >> GC.stat(:time)
-=> 123 # milliseconds (returns a Float on JRuby and TruffleRuby)
+=> 123 # milliseconds
 >> GC.stat[:time]
-=> 123 # milliseconds (returns a Float on JRuby and TruffleRuby)
+=> 123 # milliseconds
 >> GC.total_time
 => 123909999 # nanoseconds
 >> GC.measure_total_time = false # Disable instrumentation
