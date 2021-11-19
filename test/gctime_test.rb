@@ -15,10 +15,8 @@ class GCTimeTest < Minitest::Test
   end
 
   def test_gc_stat_time_is_a_numeric
-    # JRuby and TruffleRuby expose it as a Float number of milliseconds
-    # MRI 3.1 as an integer number of milliseconds
-    assert_kind_of Numeric, GC.stat(:time)
-    assert_kind_of Numeric, GC.stat[:time]
+    assert_instance_of Integer, GC.stat(:time)
+    assert_instance_of Integer, GC.stat[:time]
   end
 
   if RUBY_ENGINE == "truffleruby" && GC.stat({}) == 0

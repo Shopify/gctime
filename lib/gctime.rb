@@ -16,7 +16,7 @@ module GCTime
       end unless GC.respond_to?(:measure_total_time=)
 
       def total_time
-        (stat(:time) * 1_000_000.0).to_i # nanoseconds integer
+        stat(:time) * 1_000_000 # nanoseconds integer
       end unless GC.respond_to?(:total_time)
     end
 
