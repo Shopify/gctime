@@ -24,4 +24,8 @@ Gem::Specification.new do |spec|
     `git ls-files -z`.split("\x0").reject { |f| f.match(%r{\A(?:test|spec|features)/}) }
   end
   spec.require_paths = ["lib"]
+
+  spec.extensions = ['ext/gctime/extconf.rb']
+
+  spec.add_development_dependency 'rake-compiler', '~> 1.0'
 end

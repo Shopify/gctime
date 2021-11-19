@@ -1,6 +1,6 @@
 # GCTime
 
-Exposes a monotonically increasing GC total_time metric.
+Backport Ruby 3.1's `GC.stat(:time)` and `GC.total_time`. This gem is a noop on Ruby 3.1+.
 
 ## Installation
 
@@ -21,38 +21,23 @@ Or install it yourself as:
 ## Usage
 
 ```ruby
-require 'gctime'
->> GCTime.total_time
-=> 0.0
->> GCTime.enable
-=> nil
+>> GC.measure_total_time
+=> true
 >> 4.times { GC.start }
 => 4
->> GCTime.total_time
-=> 127.42100000000012 # ms
->> GCTime.disable
-=> nil
+>> GC.stat(:time)
+=> 123 # milliseconds (returns a Float on JRuby and TruffleRuby)
+>> GC.stat[:time]
+=> 123 # milliseconds (returns a Float on JRuby and TruffleRuby)
+>> GC.total_time
+=> 123909999 # nanoseconds
+>> GC.measure_total_time = false # Disable instrumentation
+=> false
 ```
 
-`GCTime.total_time` returns a `Float` representing the total number of milliseconds spent in GC.
+`GC.stat(:time)` and `GC.stat[:time]` returns the total number of milliseconds spent in GC as Integer on MRI and as Float on JRuby and TruffleRuby.
 
-## Incompatibilities
-
-`CGTime` relies on the built-in [`GC::Profiler`](https://ruby-doc.org/core-3.0.0/GC/Profiler.html) which is a stateful datastructure. Which mean any other gem or application code using it
-is likely incompatoble with `GCTime` and will likely lead to incorrect timings.
-
-Known incompatible gems are:
-
-  - [`newrelic_rpm`](https://github.com/newrelic/newrelic-ruby-agent/blob/4baffe79b87e6ec725dfae9f5e76113a1f1d01ba/lib/new_relic/agent/vm/monotonic_gc_profiler.rb#L22-L38)
-
-If you suspect that one of your gem might be using `GC::Profiler.clear`, you can check with `grep -R 'GC::Profiler.clear' $(bundle show --paths)`.
-
-## Memory Leak
-
-It is important to note that the underlying `GC::Profiler` keeps internal records of all GC triggers. Every time `GCTime.total_time` is called the datastructure is reset,
-but if it isn't called on a regular basis, it might lead to a memory leak.
-
-Make sure to either call it on a regular basis, or to disable it when it's no longer needed.
+`GC.total_time` returns the total number of nanoseconds spent in GC as Integer.
 
 ## Development
 

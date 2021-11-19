@@ -1,13 +1,15 @@
 PATH
   remote: .
   specs:
-    gctime (0.2.0)
+    gctime (1.0.0)
 
 GEM
   remote: https://rubygems.org/
   specs:
     minitest (5.14.4)
     rake (13.0.6)
+    rake-compiler (1.1.1)
+      rake
 
 PLATFORMS
   ruby
@@ -17,6 +19,7 @@ DEPENDENCIES
   gctime!
   minitest (~> 5.0)
   rake (~> 13.0)
+  rake-compiler (~> 1.0)
 
 BUNDLED WITH
    2.2.25
